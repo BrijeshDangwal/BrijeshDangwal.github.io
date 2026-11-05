@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Brijesh Dangwal Portfolio</title>
+<meta name="description" content="Brijesh Dangwal: Master of Computer Science (Data Science and AI), University of Sydney. Projects in quant research, data analysis, software systems and AI agents.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: results ticker band, identity header with an at-a-glance column, sticky lens bar,
+   evidence grid where the first project for the chosen lens spans the width, then background and contact. */
+:root {
+  --bg: #EEF1F0;
+  --surface: #FFFFFF;
+  --ink: #121A18;
+  --muted: #53615C;
+  --line: #D3DBD8;
+  --accent: #1F48C9;
+  --accent-soft: #E3E9FB;
+  --up: #11795A;
+  --down: #B83B26;
+  --band: #121A18;
+  --band-fg: #E7EEEB;
+  --band-muted: #9DB0A9;
+  --band-down: #F59C86;
+  --band-up: #6FD3AC;
+  --plate: #FFFFFF;
+  --shadow: 0 1px 2px rgba(18, 26, 24, .05), 0 6px 20px rgba(18, 26, 24, .05);
+  --font-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C1110; --surface: #141B19; --ink: #E3EAE7; --muted: #95A49E; --line: #26312D;
+    --accent: #8EA8FF; --accent-soft: #1C2647; --up: #4CC59A; --down: #F08B74;
+    --band: #050807; --band-fg: #DCE5E1; --band-muted: #7F918A; --plate: #FFFFFF;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 6px 20px rgba(0, 0, 0, .25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C1110; --surface: #141B19; --ink: #E3EAE7; --muted: #95A49E; --line: #26312D;
+  --accent: #8EA8FF; --accent-soft: #1C2647; --up: #4CC59A; --down: #F08B74;
+  --band: #050807; --band-fg: #DCE5E1; --band-muted: #7F918A; --plate: #FFFFFF;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 6px 20px rgba(0, 0, 0, .25);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+a { color: var(--accent); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* ticker */
+.ticker { background: var(--band); color: var(--band-fg); overflow: hidden; border-bottom: 1px solid var(--line); }
+.ticker .track { display: flex; width: max-content; animation: tick 70s linear infinite; }
+.ticker:hover .track { animation-play-state: paused; }
+.ticker ul { display: flex; list-style: none; margin: 0; padding: 9px 0; }
+.ticker li { display: flex; align-items: baseline; gap: 8px; padding: 0 22px; border-right: 1px solid color-mix(in srgb, var(--band-fg) 18%, transparent); white-space: nowrap; font-size: 13px; }
+.ticker .v { font-family: var(--font-mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+.ticker .k { color: var(--band-muted); }
+.ticker .dn { color: var(--band-down); }
+.ticker .upv { color: var(--band-up); }
+@keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .ticker { overflow-x: auto; }
+  .ticker .track { animation: none; }
+  .ticker ul[aria-hidden="true"] { display: none; }
+}
+
+/* header */
+header.intro { padding-block: 44px 34px; display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 40px; align-items: end; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+h1 { font-family: var(--font-display); font-stretch: 125%; font-weight: 850; font-size: clamp(40px, 7.4vw, 88px); line-height: .92; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+.lede { font-size: clamp(17px, 2vw, 20px); line-height: 1.5; max-width: 40em; margin: 20px 0 0; color: var(--ink); }
+.lede em { font-style: normal; color: var(--accent); font-weight: 600; }
+.contact { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin-top: 22px; font-size: 15px; }
+.contact a { font-weight: 600; }
+.email { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 14px; }
+.email span { user-select: all; }
+.btn { appearance: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 600 13px var(--font-body); padding: 5px 11px; border-radius: 6px; cursor: pointer; }
+.btn:hover { border-color: var(--muted); }
+.glance { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 6px 20px; margin: 0; }
+.glance div { display: grid; grid-template-columns: minmax(0, 1fr); padding: 12px 0; border-top: 1px solid var(--line); }
+.glance div:first-child { border-top: 0; }
+.glance dt { font-size: 12.5px; color: var(--muted); }
+.glance dd { margin: 2px 0 0; font-weight: 600; }
+.glance .num { font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: 22px; margin-right: 6px; }
+
+/* lens bar */
+.lensbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-block: 1px solid var(--line); }
+.lensbar .wrap { display: flex; align-items: center; gap: 14px; padding-block: 10px; }
+.lensbar .label { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.lenses { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.lenses::-webkit-scrollbar { display: none; }
+.lenses button { appearance: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 7px 14px; font: 600 14px var(--font-body); cursor: pointer; white-space: nowrap; }
+.lenses button .c { font-family: var(--font-mono); font-weight: 500; font-size: 12px; color: var(--muted); margin-left: 6px; }
+.lenses button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.lenses button[aria-pressed="true"] .c { color: color-mix(in srgb, var(--bg) 70%, transparent); }
+
+/* lens summary */
+.lens-summary { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 12px 40px; padding-block: 30px 22px; align-items: start; }
+.lens-summary h2 { font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: clamp(24px, 3.2vw, 34px); line-height: 1.1; margin: 0; text-wrap: balance; }
+.lens-summary p { margin: 8px 0 0; color: var(--muted); max-width: 46em; }
+.toolkit { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 0; padding: 0; list-style: none; }
+.toolkit li { font-family: var(--font-mono); font-size: 12.5px; border: 1px solid var(--line); background: var(--surface); border-radius: 5px; padding: 3px 8px; }
+
+/* projects */
+.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding-bottom: 48px; }
+.proj { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px 22px 18px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.proj.feature { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 14px 30px; box-shadow: var(--shadow); }
+.proj.wide { grid-column: 1 / -1; }
+.proj.feature.nofig { grid-template-columns: minmax(0, 1fr); }
+.proj.feature.nofig .pts, .proj.feature.nofig .q { max-width: 62em; }
+.proj.feature > .body { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.proj > .body { display: contents; }
+.kicker { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.proj h3 { font-family: var(--font-display); font-stretch: 110%; font-weight: 800; font-size: 23px; line-height: 1.15; margin: 0; text-wrap: balance; }
+.proj.feature h3 { font-size: clamp(26px, 3vw, 34px); }
+.proj h3 a { color: var(--ink); text-decoration: none; }
+.proj h3 a:hover { color: var(--accent); text-decoration: underline; }
+.meta { font-size: 13.5px; color: var(--muted); margin: 6px 0 0; }
+.q { font-size: 17px; line-height: 1.45; margin: 0; font-style: italic; color: var(--ink); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0; margin: 0; border-block: 1px solid var(--line); }
+.stats div { padding: 10px 12px 10px 0; min-width: 0; }
+.stats div + div { padding-left: 12px; border-left: 1px solid var(--line); }
+.stats dd { margin: 0; font-family: var(--font-mono); font-weight: 600; font-size: 20px; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.stats dt { font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.35; }
+.stats .dn { color: var(--down); }
+.stats .up { color: var(--up); }
+.proj ul.pts { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 15px; }
+.flag { margin: 0; font-size: 14px; color: var(--muted); padding: 10px 12px; background: var(--bg); border-radius: 8px; }
+.flag b { color: var(--ink); font-weight: 600; }
+figure { margin: 0; }
+figure .plate { background: var(--plate); border: 1px solid var(--line); border-radius: 8px; padding: 8px; }
+figure img { display: block; width: 100%; height: auto; }
+figcaption { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+.proj.feature figure { align-self: center; }
+.links { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: auto; padding-top: 2px; font-size: 14.5px; font-weight: 600; }
+.links .muted { color: var(--muted); font-weight: 500; }
+
+/* background */
+section.bg { border-top: 1px solid var(--line); padding-block: 40px 20px; }
+section.bg h2 { font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: 26px; margin: 0 0 18px; }
+.cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.col h3 { font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin: 0 0 10px; }
+.entries { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.entries li { min-width: 0; }
+.entries .t { font-weight: 600; }
+.entries .w { color: var(--muted); font-size: 14px; }
+.entries .d { font-size: 14.5px; margin-top: 2px; }
+
+footer { border-top: 1px solid var(--line); margin-top: 28px; }
+footer .wrap { padding-block: 26px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 14px; }
+
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--bg); padding: 9px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; z-index: 20; }
+
+@media (max-width: 900px) {
+  header.intro, .lens-summary { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .projects { grid-template-columns: minmax(0, 1fr); }
+  .proj.feature { grid-template-columns: minmax(0, 1fr); }
+  .cols { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stats div + div { border-left: 0; padding-left: 0; }
+  .stats div:nth-child(even) { border-left: 1px solid var(--line); padding-left: 12px; }
+  .stats div:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .lensbar .label { display: none; }
+  header.intro { padding-block: 30px 26px; }
+  .proj { padding: 18px 16px 16px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+
+
+<div class="ticker" aria-label="Headline results from my projects">
+  <div class="track">
+    <ul>
+      <li><span class="v dn">1.07 → 0.08</span><span class="k">best signal's Sharpe, out of sample</span></li>
+      <li><span class="v">53,953 req · 0 failures</span><span class="k">task queue load test</span></li>
+      <li><span class="v upv">0 unsafe</span><span class="k">actions across 30 AI incidents</span></li>
+      <li><span class="v dn">F1 0.90 → 0.03</span><span class="k">fraud model after a regime change</span></li>
+      <li><span class="v">16/16 · 0 leaks</span><span class="k">C rendering engine under Valgrind</span></li>
+      <li><span class="v">1.75 bps</span><span class="k">break-even cost of a real but untradable edge</span></li>
+      <li><span class="v">AIR 84</span><span class="k">GATE 2025, India</span></li>
+      <li><span class="v">WAM 82.8</span><span class="k">University of Sydney</span></li>
+    </ul>
+    <ul aria-hidden="true">
+      <li><span class="v dn">1.07 → 0.08</span><span class="k">best signal's Sharpe, out of sample</span></li>
+      <li><span class="v">53,953 req · 0 failures</span><span class="k">task queue load test</span></li>
+      <li><span class="v upv">0 unsafe</span><span class="k">actions across 30 AI incidents</span></li>
+      <li><span class="v dn">F1 0.90 → 0.03</span><span class="k">fraud model after a regime change</span></li>
+      <li><span class="v">16/16 · 0 leaks</span><span class="k">C rendering engine under Valgrind</span></li>
+      <li><span class="v">1.75 bps</span><span class="k">break-even cost of a real but untradable edge</span></li>
+      <li><span class="v">AIR 84</span><span class="k">GATE 2025, India</span></li>
+      <li><span class="v">WAM 82.8</span><span class="k">University of Sydney</span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="intro">
+    <div>
+      <p class="eyebrow">Sydney · Master of Computer Science, Data Science and AI</p>
+      <h1>Brijesh Dangwal</h1>
+      <p class="lede">I build data, software and AI systems, then test whether their results hold up: on <em>unseen periods</em>, under <em>real load</em>, and against the <em>less flattering metric</em>.</p>
+      <div class="contact">
+        <span class="email"><span id="emailText">dangwalbrijesh07@gmail.com</span><button class="btn" id="copyEmail" type="button">Copy</button></span>
+        <a href="https://www.linkedin.com/in/brijesh-d-5509911ab/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="https://github.com/BrijeshDangwal" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+    <dl class="glance">
+      <div><dt>University of Sydney, 2026 to 2027</dt><dd><span class="num">82.8</span>WAM · 95 in Data Structures and Algorithms</dd></div>
+      <div><dt>NIT Uttarakhand, B.Tech 2021 to 2025</dt><dd><span class="num">Rank 1</span>Department, Gold Medal</dd></div>
+      <div><dt>GATE 2025, national engineering exam</dt><dd><span class="num">84</span>All India Rank</dd></div>
+      <div><dt>Looking for</dt><dd>Quant, data and software internships, and part-time roles at startups. Full time December to February, part time during semester.</dd></div>
+    </dl>
+  </header>
+</div>
+
+<nav class="lensbar" aria-label="Filter projects by area">
+  <div class="wrap">
+    <span class="label">Show work for</span>
+    <div class="lenses" id="lenses">
+      <button type="button" data-lens="all" aria-pressed="true">All work<span class="c"></span></button>
+      <button type="button" data-lens="quant" aria-pressed="false">Quant &amp; finance<span class="c"></span></button>
+      <button type="button" data-lens="data" aria-pressed="false">Data &amp; analytics<span class="c"></span></button>
+      <button type="button" data-lens="software" aria-pressed="false">Software &amp; systems<span class="c"></span></button>
+      <button type="button" data-lens="ai" aria-pressed="false">AI &amp; agents<span class="c"></span></button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <section class="lens-summary" aria-live="polite">
+    <div>
+      <h2 id="lensTitle">Everything I have built, strongest first</h2>
+      <p id="lensText">Each project states the question it answers, the numbers it produced, and the limitation I would raise myself. Choose an area above to see only the work that matters for that kind of role.</p>
+    </div>
+    <ul class="toolkit" id="toolkit" aria-label="Tools used in these projects"></ul>
+  </section>
+
+  <div class="projects" id="projects">
+
+    <article class="proj feature" id="signal-lab" data-lenses="quant data">
+      <div class="body">
+        <div>
+          <p class="kicker">Quant &amp; finance · Statistics</p>
+          <h3><a href="https://github.com/BrijeshDangwal/Signal-Robustness-Lab" target="_blank" rel="noopener">Signal Robustness Lab</a></h3>
+          <p class="meta">Nov 2026 · Solo · Python, statsmodels, arch, SciPy</p>
+        </div>
+        <p class="q">Do classic trading signals survive honest statistical testing?</p>
+        <dl class="stats">
+          <div><dd class="dn">1.07 → 0.08</dd><dt>Sharpe of the best 2000–2010 signal, then 2011–2018</dt></div>
+          <div><dd>1.75 bps</dd><dt>Break-even cost of NASDAQ's overnight edge</dt></div>
+          <div><dd>96%</dd><dt>S&amp;P 500 opens before 2006 found copied from the prior close</dt></div>
+        </dl>
+        <ul class="pts">
+          <li>Tested 20 classic daily signals on the S&amp;P 500 and NASDAQ, 1999 to 2018: chosen on 2000 to 2010, judged once on 2011 to 2018.</li>
+          <li>Newey-West t-tests, block bootstrap Sharpe intervals, Bonferroni and Benjamini-Hochberg corrections, and a studentized SPA test I wrote after finding the library version ignored studentization.</li>
+          <li>Two raw "discoveries" (p = 0.006 and 0.014) failed correction. NASDAQ's overnight return is real (out of sample p = 0.002) but cannot survive trading costs.</li>
+        </ul>
+        <p class="flag"><b>Limitation I report:</b> index levels are not tradable instruments, and the study uses a single train and test split.</p>
+        <div class="links"><a href="https://github.com/BrijeshDangwal/Signal-Robustness-Lab" target="_blank" rel="noopener">Code and full results ↗</a></div>
+      </div>
+      <figure>
+        <div class="plate"><img src="img/signal_is_oos.png" alt="Scatter of each signal's Sharpe ratio in 2000 to 2010 against 2011 to 2018. The best in-sample signal falls close to zero out of sample." width="1600" height="672" loading="lazy"></div>
+        <figcaption>Each dot is a signal. Points below the dashed line did worse out of sample; the circled one was the best in sample.</figcaption>
+      </figure>
+    </article>
+
+    <article class="proj" id="task-queue" data-lenses="software quant">
+      <div class="body">
+        <div>
+          <p class="kicker">Software &amp; systems · Backend</p>
+          <h3><a href="https://github.com/BrijeshDangwal/Taskqueue" target="_blank" rel="noopener">Distributed Task Queue</a></h3>
+          <p class="meta">Jul 2026 · Solo · FastAPI, Celery, Redis, PostgreSQL, Prometheus, Grafana, Locust</p>
+        </div>
+        <p class="q">Where does an async job service actually break under load?</p>
+        <dl class="stats">
+          <div><dd class="up">0</dd><dt>Failures in 53,953 requests</dt></div>
+          <div><dd>168</dd><dt>Requests per second</dt></div>
+          <div><dd>1.4 s</dd><dt>p95 latency, bounded</dt></div>
+        </dl>
+        <ul class="pts">
+          <li>Found three bottlenecks in sequence: worker saturation, an exhausted database connection pool (about 15% errors), then raw worker throughput.</li>
+          <li>Made delivery crash safe (late acknowledgements, reject on worker loss) and added idempotency keys, so a retried job never charges twice.</li>
+          <li>Fixed priority ordering that silently failed because workers prefetched low priority jobs.</li>
+        </ul>
+        <figure>
+          <div class="plate"><img src="img/taskqueue_arch.svg" alt="Architecture: FastAPI producer, Redis broker with three priority lanes, Celery workers, PostgreSQL as system of record, Prometheus and Grafana for monitoring, Locust for load." width="1120" height="760" loading="lazy"></div>
+        </figure>
+        <p class="flag"><b>Limitation I report:</b> the remaining ceiling is worker throughput; the next fix is backpressure that rejects work before queues grow.</p>
+        <div class="links"><a href="https://github.com/BrijeshDangwal/Taskqueue" target="_blank" rel="noopener">Code and load test results ↗</a></div>
+      </div>
+    </article>
+
+    <article class="proj" id="incident-commander" data-lenses="ai software">
+      <div class="body">
+        <div>
+          <p class="kicker">AI &amp; agents · Safety</p>
+          <h3><a href="https://github.com/BrijeshDangwal/Agentic-Incident-Commander" target="_blank" rel="noopener">Agentic Incident Commander</a></h3>
+          <p class="meta">May to Sep 2026 · Built with Shivam Dangwal · LangGraph, MCP, FastAPI, Pydantic, Ollama</p>
+        </div>
+        <p class="q">How do you let an AI agent help in operations without ever letting it act on its own?</p>
+        <dl class="stats">
+          <div><dd>93.3%</dd><dt>Correct remediation actions, 30 labelled incidents</dt></div>
+          <div><dd class="up">0</dd><dt>Unsafe executions</dt></div>
+          <div><dd>78%</dd><dt>Branch test coverage, CI gated</dt></div>
+        </dl>
+        <ul class="pts">
+          <li>Agents read metrics and logs through MCP tools, diagnose the root cause, retrieve runbook guidance and propose one fix.</li>
+          <li>The model never calls side-effecting tools: plans pass a schema and an allowlist, a human approves, and only a trusted executor acts. State survives restarts.</li>
+          <li>Both errors proposed a restart where none was needed, and the approval gate stopped both.</li>
+        </ul>
+        <p class="flag"><b>Limitation I report:</b> keyword-based root cause scoring over-credits short words, so I lead with action accuracy and the stricter Top-1 retrieval figure (73.1%).</p>
+        <div class="links"><a href="https://github.com/BrijeshDangwal/Agentic-Incident-Commander" target="_blank" rel="noopener">Code and evaluation ↗</a></div>
+      </div>
+    </article>
+
+    <article class="proj" id="elliptic" data-lenses="quant data ai">
+      <div class="body">
+        <div>
+          <p class="kicker">Quant &amp; finance · Risk and fraud</p>
+          <h3><a href="https://github.com/BrijeshDangwal/Elliptic-Fraud-Detection" target="_blank" rel="noopener">Elliptic Bitcoin Fraud Detection</a></h3>
+          <p class="meta">Oct 2026 · Solo · Python, LightGBM, scikit-learn, SciPy</p>
+        </div>
+        <p class="q">Can a model catch illicit Bitcoin transactions, and what happens when criminals change behaviour?</p>
+        <dl class="stats">
+          <div><dd>0.93 / 0.73</dd><dt>Precision / recall on the illicit class</dt></div>
+          <div><dd class="dn">0.90 → 0.03</dd><dt>F1 before and after a dark market shutdown</dt></div>
+          <div><dd>44 vs 3</dd><dt>Of 169 illicit caught, retrained vs static</dt></div>
+        </dl>
+        <ul class="pts">
+          <li>203,769 transactions and 234,355 payment flows, 2% illicit. Trained on the past, tested once on the future, thresholds tuned on a separate window.</li>
+          <li>My random forest reproduced the published baseline (F1 0.797 vs 0.788). My own graph features added nothing beyond seed noise, and I said so.</li>
+          <li>An unsupervised Isolation Forest scored below random, showing illicit flows here are not statistical outliers.</li>
+        </ul>
+        <figure>
+          <div class="plate"><img src="img/elliptic_f1.png" alt="F1 score per time step: high until step 42, then collapsing to near zero for every model after the dark market shutdown." width="1440" height="672" loading="lazy"></div>
+        </figure>
+        <p class="flag"><b>Limitation I report:</b> the retraining result assumes labels arrive immediately, so it is an upper bound.</p>
+        <div class="links"><a href="https://github.com/BrijeshDangwal/Elliptic-Fraud-Detection" target="_blank" rel="noopener">Code and walkthrough ↗</a></div>
+      </div>
+    </article>
+
+    <article class="proj" id="research-assistant" data-lenses="ai data software">
+      <div class="body">
+        <div>
+          <p class="kicker">AI &amp; agents · Retrieval</p>
+          <h3><a href="https://github.com/BrijeshDangwal/Agentic-Multi-Document-Research-Assistant" target="_blank" rel="noopener">Multi-Document Research Assistant</a></h3>
+          <p class="meta">Apr to May 2026 · Built with Shivam Dangwal · LangGraph, FastMCP, FastAPI, SQLite, OCR</p>
+        </div>
+        <p class="q">Can a local assistant answer across PDFs and scanned pages, and cite the exact page?</p>
+        <dl class="stats">
+          <div><dd>40</dd><dt>Golden test questions</dt></div>
+          <div><dd>100%</dd><dt>Citation precision</dt></div>
+          <div><dd>53</dd><dt>Regression tests in CI</dt></div>
+        </dl>
+        <ul class="pts">
+          <li>Hybrid routing: rules catch obvious intents, a small local model handles the rest, and ambiguous questions default to retrieval.</li>
+          <li>Retrieval runs as MCP tools over a persistent vector store, and every claim in an answer cites its source page.</li>
+        </ul>
+        <p class="flag"><b>Limitation I report:</b> the test corpus is six short files, so the benchmark proves the pipeline works end to end, not retrieval quality at scale.</p>
+        <div class="links"><a href="https://github.com/BrijeshDangwal/Agentic-Multi-Document-Research-Assistant" target="_blank" rel="noopener">Code and benchmark ↗</a></div>
+      </div>
+    </article>
+
+    <article class="proj" id="pointerpro" data-lenses="software quant">
+      <div class="body">
+        <div>
+          <p class="kicker">Software &amp; systems · C</p>
+          <h3>PointerPro Animate, a 2D rendering engine in C</h3>
+          <p class="meta">Mar to May 2026 · University of Sydney systems programming · C, Linux, Valgrind</p>
+        </div>
+        <p class="q">Can I build an image and animation engine on raw memory without a single leak?</p>
+        <dl class="stats">
+          <div><dd class="up">16/16</dd><dt>Public tests passed</dt></div>
+          <div><dd class="up">0</dd><dt>Memory leaks under Valgrind</dt></div>
+        </dl>
+        <ul class="pts">
+          <li>Decodes BMP files (packed headers, bottom-up rows, missing alpha), layers sprites in a linked list whose order is the z order, and alpha composites ARGB32 frames.</li>
+          <li>Reference-counted sprites. An early auto-free attempt caused a double free and taught me to define ownership before writing cleanup code.</li>
+        </ul>
+        <div class="links"><span class="muted">Repository private under the university's academic integrity rules</span></div>
+      </div>
+    </article>
+
+    <article class="proj" id="kg-validation" data-lenses="ai data">
+      <div class="body">
+        <div>
+          <p class="kicker">AI &amp; agents · Verification</p>
+          <h3><a href="https://github.com/BrijeshDangwal/KG-Guided-LLM-Validation-Reasoning-System" target="_blank" rel="noopener">Knowledge Graph Guided LLM Validation</a></h3>
+          <p class="meta">Nov 2025 to Feb 2026 · Python, BM25, NLI, NetworkX, Docker</p>
+        </div>
+        <p class="q">Can claims about a long novel be checked automatically against the text itself?</p>
+        <ul class="pts">
+          <li>A nine-stage pipeline: chunking, claim extraction, fact mining, evidence retrieval, knowledge graph triples, logic rules that catch contradictions, score aggregation and a readable evidence report per claim.</li>
+          <li>Every stage writes versioned output, so one experiment can be rerun a stage at a time.</li>
+        </ul>
+        <div class="links"><a href="https://github.com/BrijeshDangwal/KG-Guided-LLM-Validation-Reasoning-System" target="_blank" rel="noopener">Code and architecture ↗</a></div>
+      </div>
+    </article>
+
+    <article class="proj" id="artisan" data-lenses="software ai">
+      <div class="body">
+        <div>
+          <p class="kicker">Software &amp; systems · Cloud</p>
+          <h3><a href="https://github.com/BrijeshDangwal/Artisan-Marketplace" target="_blank" rel="noopener">AI Artisan Marketplace</a></h3>
+          <p class="meta">2025 · Google Gen AI Hackathon, with Shivam Dangwal · React, FastAPI, Cloud Run, Pub/Sub, Vertex AI</p>
+        </div>
+        <p class="q">Can AI help Indian artisans describe, translate and sell their crafts to global buyers?</p>
+        <ul class="pts">
+          <li>An API service and a separate worker on Cloud Run, joined by Pub/Sub, so slow AI generation never blocks a request.</li>
+          <li>Gemini writes product descriptions and artisan stories from a photo; content is translated for buyers abroad.</li>
+          <li>Each service runs under its own least-privilege account: the API can only publish, the worker only subscribe.</li>
+        </ul>
+        <div class="links"><a href="https://github.com/BrijeshDangwal/Artisan-Marketplace" target="_blank" rel="noopener">Code ↗</a><a href="https://youtu.be/XQgzSAKytJo" target="_blank" rel="noopener">Demo video ↗</a></div>
+      </div>
+    </article>
+
+    <article class="proj" id="iomc" data-lenses="software data">
+      <div class="body">
+        <div>
+          <p class="kicker">Software &amp; systems · Databases</p>
+          <h3>IOMC Trials Management System</h3>
+          <p class="meta">May 2026 · Team of three, University of Sydney · PostgreSQL, PL/pgSQL, Python</p>
+        </div>
+        <p class="q">Can the database itself refuse invalid records, instead of trusting the application?</p>
+        <ul class="pts">
+          <li>Normalised schema with business rules enforced as constraints, triggers and PL/pgSQL functions.</li>
+          <li>Parameterised queries and explicit transactions from Python for safe, consistent writes.</li>
+        </ul>
+        <div class="links"><span class="muted">Coursework; repository private</span></div>
+      </div>
+    </article>
+
+    <article class="proj" id="ct-research" data-lenses="data">
+      <div class="body">
+        <div>
+          <p class="kicker">Data &amp; analytics · Research</p>
+          <h3>CT-based bone density estimation</h3>
+          <p class="meta">Ongoing · Independent research with a consultant radiologist</p>
+        </div>
+        <p class="q">Can low bone density be flagged from CT scans patients already had for other reasons?</p>
+        <ul class="pts">
+          <li>Built the measurement workflow: vertebral levels D9 to D12 and L1 to L5, trabecular regions of interest, and Hounsfield Unit extraction.</li>
+          <li>Studying how scanner model, tube voltage, reconstruction and calibration shift the measurement.</li>
+        </ul>
+        <p class="flag"><b>Limitation I report:</b> routine scans have no calibration phantom, so results are a Hounsfield Unit surrogate, not calibrated density.</p>
+      </div>
+    </article>
+
+    <article class="proj" id="markets" data-lenses="quant">
+      <div class="body">
+        <div>
+          <p class="kicker">Quant &amp; finance · Preparation</p>
+          <h3>Markets and problem-solving practice</h3>
+          <p class="meta">Ongoing self-study</p>
+        </div>
+        <ul class="pts">
+          <li>Market mechanics: order books and order types, bid-ask spreads, position sizing, expectancy, drawdowns and the Kelly criterion.</li>
+          <li>Trading-firm assessment practice: mental arithmetic, probability and expected value.</li>
+          <li>Competitive programming in C++ on Codeforces.</li>
+        </ul>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+<div class="wrap">
+  <section class="bg" aria-labelledby="bgTitle">
+    <h2 id="bgTitle">Background</h2>
+    <div class="cols">
+      <div class="col">
+        <h3>Education</h3>
+        <ul class="entries">
+          <li><div class="t">University of Sydney</div><div class="w">Master of Computer Science, Data Science and AI · Feb 2026 to Dec 2027</div><div class="d">WAM 82.8, Sydney International Student Award. Data Structures and Algorithms 95 (HD). Now taking Statistics, Machine Learning and Data Mining, Principles of Data Science, and Networks and Distributed Systems.</div></li>
+          <li><div class="t">National Institute of Technology Uttarakhand</div><div class="w">B.Tech Civil Engineering, Minor in Computer Science · 2021 to 2025</div><div class="d">CGPA 9.12/10, Department Rank 1 and Gold Medal, Best Overall Performer 2023/24.</div></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Experience</h3>
+        <ul class="entries">
+          <li><div class="t">Private Tutor, Ezy Math Tutoring</div><div class="w">Sydney · Mar 2026 to now</div><div class="d">Maths and computer science, one to one.</div></li>
+          <li><div class="t">Crew Member, Guzman y Gomez</div><div class="w">Seven Hills · Mar 2026 to now</div><div class="d">Fast, accurate service on busy overnight shifts.</div></li>
+          <li><div class="t">Intern, Bureau of Indian Standards</div><div class="w">Dehradun · Jun to Jul 2024</div><div class="d">Reviewed compliance documentation against national standards.</div></li>
+          <li><div class="t">Technical Intern, Rail Vikas Nigam Limited</div><div class="w">Devprayag site · Jun to Jul 2023</div><div class="d">Supported engineering operations and quality checks on a large rail project.</div></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Also</h3>
+        <ul class="entries">
+          <li><div class="t">GATE 2025, All India Rank 84</div><div class="d">India's national graduate engineering exam.</div></li>
+          <li><div class="t">Sports Club executive and badminton captain</div><div class="d">NIT Uttarakhand.</div></li>
+          <li><div class="t">IBM certificates</div><div class="d">Machine Learning with Python, Deep Learning, and PyTorch.</div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>Brijesh Dangwal · Sydney · dangwalbrijesh07@gmail.com</span>
+    <span>Updated November 2026</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(() => {
+  const LENSES = {
+    all: {
+      title: "Everything I have built, strongest first",
+      text: "Each project states the question it answers, the numbers it produced, and the limitation I would raise myself. Choose an area above to see only the work that matters for that kind of role.",
+      order: ["signal-lab", "task-queue", "incident-commander", "elliptic", "research-assistant", "pointerpro", "kg-validation", "artisan", "iomc", "ct-research"],
+      tools: ["Python", "C", "C++", "SQL", "pandas", "statsmodels", "LightGBM", "FastAPI", "PostgreSQL", "Redis", "LangGraph", "Docker", "GitHub Actions"]
+    },
+    quant: {
+      title: "Quant and finance: testing whether an edge is real",
+      text: "Out-of-sample evaluation, corrections for testing many ideas at once, regime changes, and what trading costs do to a result. Plus the C and systems work behind fast, reliable software.",
+      order: ["signal-lab", "elliptic", "task-queue", "pointerpro", "markets"],
+      tools: ["Python", "statsmodels", "arch", "SciPy", "pandas", "LightGBM", "Newey-West", "Block bootstrap", "Multiple testing", "C", "C++"]
+    },
+    data: {
+      title: "Data and analytics: careful measurement",
+      text: "Large datasets, honest validation, clear charts, and written explanations of what the numbers do and do not show.",
+      order: ["signal-lab", "elliptic", "kg-validation", "ct-research", "research-assistant", "iomc"],
+      tools: ["Python", "pandas", "SQL", "PostgreSQL", "scikit-learn", "LightGBM", "statsmodels", "matplotlib", "Hypothesis testing", "Jupyter"]
+    },
+    software: {
+      title: "Software and systems: built, then broken on purpose",
+      text: "Backend services load tested to their limits, workflows that survive restarts, databases that enforce their own rules, and C code with no leaks.",
+      order: ["task-queue", "incident-commander", "pointerpro", "iomc", "artisan", "research-assistant"],
+      tools: ["Python", "C", "FastAPI", "Celery", "Redis", "PostgreSQL", "Docker", "Prometheus", "Grafana", "Locust", "Valgrind", "GitHub Actions", "GCP"]
+    },
+    ai: {
+      title: "AI and agents: useful, measured and kept in bounds",
+      text: "Agent workflows with tools, retrieval with citations, and evaluation sets that show where the model is wrong, not only where it is right.",
+      order: ["incident-commander", "research-assistant", "kg-validation", "elliptic", "artisan"],
+      tools: ["LangGraph", "MCP", "FastMCP", "Pydantic", "Ollama", "RAG", "Embeddings", "NLI", "Evaluation harnesses", "Vertex AI"]
+    }
+  };
+
+  const grid = document.getElementById("projects");
+  const cards = new Map(Array.from(grid.querySelectorAll(".proj")).map(el => [el.id, el]));
+  const buttons = Array.from(document.querySelectorAll("#lenses button"));
+
+  buttons.forEach(b => { b.querySelector(".c").textContent = LENSES[b.dataset.lens].order.length; });
+
+  function apply(lens) {
+    if (!LENSES[lens]) lens = "all";
+    const cfg = LENSES[lens];
+    buttons.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lens === lens)));
+    document.getElementById("lensTitle").textContent = cfg.title;
+    document.getElementById("lensText").textContent = cfg.text;
+    document.getElementById("toolkit").innerHTML = cfg.tools.map(t => "<li>" + t + "</li>").join("");
+    const shown = new Set(cfg.order);
+    cards.forEach((el, id) => { el.hidden = !shown.has(id); el.classList.remove("feature", "wide"); });
+    cfg.order.forEach((id, i) => {
+      const el = cards.get(id);
+      if (!el) return;
+      grid.appendChild(el);
+      if (i === 0) el.classList.add("feature");
+      el.classList.toggle("nofig", !el.querySelector("figure"));
+      arrangeFigure(el);
+    });
+    // Keep the two-column grid even: a lone last card spans the full width.
+    const rest = cfg.order.length - 1;
+    if (rest % 2 === 1) cards.get(cfg.order[cfg.order.length - 1]).classList.add("wide");
+  }
+
+  // In the wide layout, the featured card shows its figure beside the text.
+  function arrangeFigure(el) {
+    const body = el.querySelector(".body");
+    const fig = el.querySelector("figure");
+    if (!fig) return;
+    if (el.classList.contains("feature")) {
+      if (fig.parentElement !== el) el.appendChild(fig);
+    } else if (fig.parentElement === el) {
+      const flag = body.querySelector(".flag") || body.querySelector(".links");
+      body.insertBefore(fig, flag);
+    }
+  }
+
+  function currentLens() { return (location.hash || "").replace("#", "") || "all"; }
+
+  buttons.forEach(b => b.addEventListener("click", () => {
+    const lens = b.dataset.lens;
+    if (lens === "all") {
+      try { history.replaceState(null, "", location.pathname + location.search); } catch (e) { location.hash = ""; }
+      apply("all");
+    } else {
+      location.hash = lens;
+    }
+  }));
+  window.addEventListener("hashchange", () => apply(currentLens()));
+  apply(currentLens());
+
+  const toast = document.getElementById("toast");
+  let tt;
+  function say(msg) { toast.textContent = msg; toast.hidden = false; clearTimeout(tt); tt = setTimeout(() => { toast.hidden = true; }, 1800); }
+  document.getElementById("copyEmail").addEventListener("click", () => {
+    const text = document.getElementById("emailText").textContent;
+    const selectIt = () => { const r = document.createRange(); r.selectNodeContents(document.getElementById("emailText")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); say("Email selected. Press Ctrl+C or Cmd+C to copy."); };
+    try {
+      navigator.clipboard.writeText(text).then(() => say("Email copied"), selectIt);
+    } catch (e) { selectIt(); }
+  });
+})();
+</script>
+
+</body>
+</html>
